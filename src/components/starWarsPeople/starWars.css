@@ -1,0 +1,7 @@
+.table-list__item {
+    cursor: pointer;
+}
+
+.table-list__item:hover {
+    background-color: cadetblue !important;
+}
