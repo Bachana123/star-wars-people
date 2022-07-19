@@ -52,6 +52,7 @@ function StarWarsPeople() {
   
     const debouncedSearch = debounce((searchKey: string) => {
       setSearchKey(searchKey)
+      setActivePage(1);
       dispatch(fetchStarWarsPeople({page: activePage, search: searchKey}))
     }, 300);
 
