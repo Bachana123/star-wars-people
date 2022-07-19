@@ -9,8 +9,10 @@ export const fetchStarWarsPeople = (payload: {page: number, search?: string}): T
     return async(dispatch, getState) => {
         dispatch(starWarsPeopleActions.setStarWarsPeople([]))
         const response = await starWarsPeopleService.getAllStarWarsPeople(payload);
-        dispatch(starWarsPeopleActions.setStarWarsPeople(response.results))
-        dispatch(starWarsPeopleActions.setCountOfPeople(response.count))
+        if (response.results) {
+            dispatch(starWarsPeopleActions.setStarWarsPeople(response.results))
+            dispatch(starWarsPeopleActions.setCountOfPeople(response.count))
+        }
     }
 }
 

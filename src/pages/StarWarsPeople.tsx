@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {useNavigate} from 'react-router-dom';
 
+import { debounce } from "lodash"
+
 import { useAppSelector, useAppDispatch } from '../store/hooks'
 import { fetchStarWarsPeople } from '../store/starWarsActions';
 
@@ -48,15 +50,19 @@ function StarWarsPeople() {
       dispatch(fetchStarWarsPeople({page, search: searchKey}))
     }
   
+    const debouncedSearch = debounce((searchKey: string) => {
+      setSearchKey(searchKey)
+      dispatch(fetchStarWarsPeople({page: activePage, search: searchKey}))
+    }, 300);
+
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-      setSearchKey(event.target.value)
-      dispatch(fetchStarWarsPeople({page: activePage, search: event.target.value}))
+      debouncedSearch(event.target.value)
     }
 
     const handleClick = useCallback((event: any) => {
       const personId = event.row.url.split('/').filter((item: string) => item).pop();
       return navigate(`/person/${personId}`)
-  }, [navigate])
+    }, [navigate])
 
     useEffect(() => {
       dispatch(fetchStarWarsPeople({page: 1}))
