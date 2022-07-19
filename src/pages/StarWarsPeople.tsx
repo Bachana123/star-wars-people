@@ -52,8 +52,7 @@ function StarWarsPeople() {
   
     const debouncedSearch = debounce((searchKey: string) => {
       setSearchKey(searchKey)
-      setActivePage(1);
-      dispatch(fetchStarWarsPeople({page: activePage, search: searchKey}))
+      dispatch(fetchStarWarsPeople({page: 1, search: searchKey}))
     }, 300);
 
     const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
